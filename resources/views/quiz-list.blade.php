@@ -13,7 +13,7 @@
     <x-navbar name={{$name}}></x-navbar>
   
    <div class=" flex flex-col items-center min-h-screen pt-5">
-        <h2 class=" text-2xl text-center text-gray-800 mb-6">Category Name : {{$category}} <a href="/add-quiz" class="text-yellow-500 text-sm">Back</a></h2>
+        <h2 class=" text-2xl text-center text-gray-800 mb-6">Category Name : {{$category}} <a href="/admin-categories" class="text-yellow-500 text-sm">Back</a></h2>
     <div class="w-300">
         <table class="w-full border border-gray-300 mt-5 mb-10">
             <thead class="bg-blue-500 text-white font-serif font-medium">
