@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin Categories</title>
+    <title>Show Quiz</title>
     @vite('resources/css/app.css')
 </head>
 
@@ -13,7 +13,7 @@
     <x-navbar name={{$name}}></x-navbar>
   
    <div class=" flex flex-col items-center min-h-screen pt-5">
-        <h2 class=" text-2xl text-center text-gray-800 mb-6">All Current Quiz's MCQs <a href="/add-quiz" class="text-yellow-500 text-sm">Back</a></h2>
+        <h2 class=" text-2xl text-center text-gray-800 mb-6">Quiz Name : {{$quizName}} <a href="/add-quiz" class="text-yellow-500 text-sm">Back</a></h2>
     <div class="w-300">
         <table class="w-full border border-gray-300 mt-5 mb-10">
             <thead class="bg-blue-500 text-white font-serif font-medium">
