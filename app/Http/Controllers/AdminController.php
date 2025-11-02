@@ -121,7 +121,16 @@ class AdminController extends Controller
 
     // Admin mcqs function
     function addMCQs(Request $req){
-        $quiz = Session::get('quizDetails');
+
+        $req->validate([
+            'question' => 'required | min:5',
+            'a' => 'required',
+            'b' => 'required',
+            'c' => 'required',
+            'd' => 'required',
+            'correct_ans' => 'required'
+        ]);
+                $quiz = Session::get('quizDetails');
         $admin = Session::get('admin');
       $mcq = new Mcq();
 
@@ -139,9 +148,16 @@ class AdminController extends Controller
            if($req->submit=="add-more"){
             return redirect(url()->previous());
           }else{
-            Session()->forget('quizDetails');
+                Session::forget('quizDetails');
             return redirect('/admin-categories');
            }
       }
+    }
+
+
+    // End quiz function
+    function endQuiz(){
+        Session::forget('quizDetails');
+        return redirect('/admin-categories');   
     }
 }
