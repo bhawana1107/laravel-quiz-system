@@ -32,7 +32,8 @@
                 @enderror
             </div>
             <button type="submit"
-                class=" w-full bg-blue-600 rounded-xl px-4 py-2 text-white cursor-pointer">Login</button>
+                class=" w-full bg-blue-600 rounded-xl px-4 py-2 text-white cursor-pointer">Login
+            </button>
         </form>
     </div>
 </body>

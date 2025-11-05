@@ -19,6 +19,7 @@
                 <thead class="bg-blue-500 text-white font-serif font-medium">
                     <th class="border border-gray-300 px-4 py-2 text-left">S.No</th>
                     <th class="border border-gray-300 px-4 py-2 text-left">Quiz Name</th>
+                    <th class="border border-gray-300 px-4 py-2 text-left">Total Questions</th>
                     <th class="border border-gray-300 px-4 py-2 text-left">Action</th>
                 </thead>
                 <tbody>
@@ -26,8 +27,9 @@
                         <tr class="even:bg-gray-200 font-medium font-sans">
                             <td class="border border-gray-300 px-4 py-2">{{ $key + 1 }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $item->name }}</td>
+                             <td class="border border-gray-300 px-4 py-2">{{ $item->mcqs_count }}</td>
                             <td class="border border-gray-300 px-4 py-2">
-                                <a href="" class=" text-green-600 font-bold">
+                                <a href="/start-quiz/{{ $item->id }}/{{ $item->name }}" class=" text-green-600 font-bold">
                                 Attempt Quiz
                             </a>
                             </td>
