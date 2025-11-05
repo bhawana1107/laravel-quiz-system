@@ -18,9 +18,15 @@
        <h1 class="text-2xl text-center text-green-800 mb-6 font-bold">
         Good Luck!
        </h1>
-                   <button type="submit"
+         @if(session('user'))
+                   <a type="submit" href=""
+                class=" bg-blue-600 rounded-md px-4 py-2 my-5 text-white cursor-pointer">Start Quiz 
+    </a>
+    @else
+            <a type="submit" href="/user-signup-quiz"
                 class=" bg-blue-600 rounded-md px-4 py-2 my-5 text-white cursor-pointer">Login / SignUp for Start Quiz 
-            </button>
+    </a>
+        @endif
     </div>
     <x-user-footer></x-user-footer>
 </body>
