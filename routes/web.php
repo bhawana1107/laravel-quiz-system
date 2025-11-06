@@ -12,6 +12,9 @@ Route::view('user-signup', '/user-signup');
 Route::post('user-signup', [UserController::class, 'userSignup']);
 Route::get('user-logout',[UserController::class,'userLogout']);
 Route::get('user-signup-quiz', [UserController::class, 'userSignupQuiz']);
+Route::view('user-login', '/user-login');
+Route::post('user-login', [UserController::class, 'userLogin']);
+Route::get('user-login-quiz', [UserController::class, 'userLoginQuiz']);
 
 
 Route::view('admin','admin-login');
