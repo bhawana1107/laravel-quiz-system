@@ -9,6 +9,8 @@ use App\Models\Category;
 use App\Models\Quiz;
 use App\Models\MCQ;
 use App\Models\User;
+use App\Models\Record;
+use App\Models\MCQ_Record;
 
 class UserController extends Controller
 {
@@ -30,8 +32,10 @@ class UserController extends Controller
     function startQuiz($id, $name)
     {
         $quizCount = Mcq::where('quiz_id', $id)->count();
+        $mcqs = Mcq::where('quiz_id', $id)->get();
+        Session::put('firstMCQ', $mcqs[0]);
+       
         $quizName = $name;
-
         return view('start-quiz', ['quizName' => $quizName, 'quizCount' => $quizCount]);
     }
 
@@ -112,4 +116,45 @@ class UserController extends Controller
         Session::put('redirectToQuiz', url()->previous());
         return view('/user-login');             
     }
+
+
+    // MCQ function
+    function mcq($id, $name){
+        $record = new Record();
+        $record->user_id = Session::get('user')->id;
+        $record->quiz_id = Session::get('firstMCQ')->quiz_id;
+        $record->status = 1;
+        if ($record->save()){
+            $currentQuiz = [];
+            $currentQuiz['totalMcq'] = MCQ::where('quiz_id', Session::get('firstMCQ')->quiz_id)->count();
+            $currentQuiz['currentMcq'] = 1;
+            $currentQuiz['quizName'] = $name;
+            $currentQuiz['quizId'] = Session::get('firstMCQ')->quiz_id;
+            $currentQuiz['recordId'] = $record->id;
+            Session::put('currentQuiz', $currentQuiz);
+            $mcqData = MCQ::find($id);
+            return view('mcq-page', ['quizName' => $name, 'mcqData' => $mcqData]);
+        }else{
+            return back()->withErrors(['quiz' => 'Unable to start the quiz. Please try again later.']);
+        }
+
+       
+    }
+
+
+    // Submit and next function
+    function submitAndNext($id){
+        $currentQuiz = Session::get('currentQuiz');
+        $currentQuiz['currentMcq'] += 1;
+        $mcqData = MCQ::where([
+            ['id','>', $id],
+            ['quiz_id','=' ,$currentQuiz['quizId']]
+        ])->first();
+        Session::put('currentQuiz', $currentQuiz);
+        if($mcqData){
+            return view('mcq-page', ['quizName' => $currentQuiz['quizName'], 'mcqData' => $mcqData]);
+            }else {
+                return 'result page';
+            }
+            }
 }
