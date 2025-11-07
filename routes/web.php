@@ -15,21 +15,27 @@ Route::get('user-signup-quiz', [UserController::class, 'userSignupQuiz']);
 Route::view('user-login', '/user-login');
 Route::post('user-login', [UserController::class, 'userLogin']);
 Route::get('user-login-quiz', [UserController::class, 'userLoginQuiz']);
-Route::get('mcq/{id}/{name}', [UserController::class, 'mcq']);
-Route::post('submit-next/{id}', [UserController::class, 'submitAndNext']);
-Route::get('user-details',[UserController::class, 'userDetails']);
+Route::get('search-quiz', [UserController::class, 'searchQuiz']);
+
+Route::middleware('CheckUserAuth')->group(function(){
+    Route::get('user-details', [UserController::class, 'userDetails']);
+    Route::get('mcq/{id}/{name}', [UserController::class, 'mcq']);
+    Route::post('submit-next/{id}', [UserController::class, 'submitAndNext']);
+});
 
 Route::view('admin','admin-login');
-
 Route::post('admin',[AdminController::class,'login']);
-Route::get('admin-dashboard', [AdminController::class, 'dashboard']);
-Route::get('admin-categories', [AdminController::class, 'categories']);
-Route::get('admin-logout', [AdminController::class, 'logout']);
-Route::post('add-category', [AdminController::class, 'addCategory']);
-Route::get('category/delete/{id}', [AdminController::class, 'deleteCategory']);
-Route::post('add-category', [AdminController::class, 'addCategory']);
-Route::get('add-quiz', [AdminController::class, 'addQuiz']);
-Route::post('add-mcq', [AdminController::class, 'addMCQs']);
-Route::get('end-quiz', [AdminController::class, 'endQuiz']);
-Route::get('show-quiz/{id}/{quizName}', [AdminController::class, 'showQuiz']);
-Route::get('quiz-list/{id}/{category}', [AdminController::class, 'quizList']);
+
+Route::middleware('CheckAdminAuth')->group(function(){
+    Route::get('admin-dashboard', [AdminController::class, 'dashboard']);
+    Route::get('admin-categories', [AdminController::class, 'categories']);
+    Route::get('admin-logout', [AdminController::class, 'logout']);
+    Route::post('add-category', [AdminController::class, 'addCategory']);
+    Route::get('category/delete/{id}', [AdminController::class, 'deleteCategory']);
+    Route::post('add-category', [AdminController::class, 'addCategory']);
+    Route::get('add-quiz', [AdminController::class, 'addQuiz']);
+    Route::post('add-mcq', [AdminController::class, 'addMCQs']);
+    Route::get('end-quiz', [AdminController::class, 'endQuiz']);
+    Route::get('show-quiz/{id}/{quizName}', [AdminController::class, 'showQuiz']);
+    Route::get('quiz-list/{id}/{category}', [AdminController::class, 'quizList']);
+});

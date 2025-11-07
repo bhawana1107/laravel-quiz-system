@@ -193,5 +193,11 @@ class UserController extends Controller
         $quizRecord = Record::withQuiz()->where('user_id',Session::get('user')->id)->get();
         return view('user-details',['quizRecord'=>$quizRecord]);
     }
-     
+
+
+    // searchQuiz
+    function searchQuiz(Request $req){
+        $searchData = Quiz::withCount('mcqs')->where('name','LIKE','%'.$req->search.'%')->get();
+        return view('quiz-search',['searchData'=> $searchData,'search'=>$req->search]);
+    }
 }
