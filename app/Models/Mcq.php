@@ -9,4 +9,5 @@ class Mcq extends Model
     function quiz(){
         return $this->belongsTo(Quiz::class);
     }
+   
 }

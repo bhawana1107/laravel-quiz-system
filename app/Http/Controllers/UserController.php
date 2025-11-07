@@ -34,7 +34,7 @@ class UserController extends Controller
         $quizCount = Mcq::where('quiz_id', $id)->count();
         $mcqs = Mcq::where('quiz_id', $id)->get();
         Session::put('firstMCQ', $mcqs[0]);
-       
+
         $quizName = $name;
         return view('start-quiz', ['quizName' => $quizName, 'quizCount' => $quizCount]);
     }
@@ -59,12 +59,12 @@ class UserController extends Controller
             if (Session::has('redirectToQuiz')) {
                 $redirectTo = Session::get('redirectToQuiz');
                 Session::forget('redirectToQuiz');
-            return redirect($redirectTo);
+                return redirect($redirectTo);
             }
             return redirect('/');
         }
     }
-    
+
 
 
 
@@ -114,17 +114,18 @@ class UserController extends Controller
     function userLoginQuiz()
     {
         Session::put('redirectToQuiz', url()->previous());
-        return view('/user-login');             
+        return view('/user-login');
     }
 
 
     // MCQ function
-    function mcq($id, $name){
+    function mcq($id, $name)
+    {
         $record = new Record();
         $record->user_id = Session::get('user')->id;
         $record->quiz_id = Session::get('firstMCQ')->quiz_id;
         $record->status = 1;
-        if ($record->save()){
+        if ($record->save()) {
             $currentQuiz = [];
             $currentQuiz['totalMcq'] = MCQ::where('quiz_id', Session::get('firstMCQ')->quiz_id)->count();
             $currentQuiz['currentMcq'] = 1;
@@ -134,27 +135,50 @@ class UserController extends Controller
             Session::put('currentQuiz', $currentQuiz);
             $mcqData = MCQ::find($id);
             return view('mcq-page', ['quizName' => $name, 'mcqData' => $mcqData]);
-        }else{
+        } else {
             return back()->withErrors(['quiz' => 'Unable to start the quiz. Please try again later.']);
         }
-
-       
     }
 
 
     // Submit and next function
-    function submitAndNext($id){
+    function submitAndNext(Request $req ,$id)
+    {
         $currentQuiz = Session::get('currentQuiz');
         $currentQuiz['currentMcq'] += 1;
         $mcqData = MCQ::where([
-            ['id','>', $id],
-            ['quiz_id','=' ,$currentQuiz['quizId']]
+            ['id', '>', $id],
+            ['quiz_id', '=', $currentQuiz['quizId']]
         ])->first();
+        $isExist = MCQ_Record::where([
+        ['record_id','=',$currentQuiz['recordId']],
+        ['mcq_id', '=', $req->mcq_id],
+       ])->count();
+
+       if ($isExist < 1 ){
+        $mcq_record = new MCQ_Record();
+        $mcq_record->record_id = $currentQuiz['recordId'];
+        $mcq_record->user_id = Session::get('user')->id;
+        $mcq_record->mcq_id = $req->mcq_id;
+        $mcq_record->select_answer = $req->option;
+        if ($req->option == MCQ::find($req->mcq_id)->correct_ans) {
+                $mcq_record->is_correct = 1;
+            } else {
+                $mcq_record->is_correct = 0;
+            }
+        $mcq_record->save();
+       }
         Session::put('currentQuiz', $currentQuiz);
-        if($mcqData){
+        if ($mcqData) {
             return view('mcq-page', ['quizName' => $currentQuiz['quizName'], 'mcqData' => $mcqData]);
-            }else {
-                return 'result page';
-            }
-            }
+        } else {
+         $resultData = MCQ_Record::withMCQ()->where('record_id',$currentQuiz['recordId'])->get();
+           $correct_ans = MCQ_Record::where([
+                ['record_id','=', $currentQuiz['recordId']],
+                ['is_correct','=',1],
+            ])->count();
+            return view ('quiz-result',['resultData'=>$resultData,'correct_ans'=>$correct_ans]);
+        }
+    }   
+     
 }
