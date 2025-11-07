@@ -177,8 +177,21 @@ class UserController extends Controller
                 ['record_id','=', $currentQuiz['recordId']],
                 ['is_correct','=',1],
             ])->count();
+
+            $record = Record::find($currentQuiz['recordId']);
+            if($record){
+                $record->status = 2;
+                $record->update();
+            }
             return view ('quiz-result',['resultData'=>$resultData,'correct_ans'=>$correct_ans]);
         }
     }   
+
+
+    // User Details Function
+    function userDetails(){
+        $quizRecord = Record::withQuiz()->where('user_id',Session::get('user')->id)->get();
+        return view('user-details',['quizRecord'=>$quizRecord]);
+    }
      
 }
