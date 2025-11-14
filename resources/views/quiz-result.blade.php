@@ -14,10 +14,12 @@
     <div class="flex flex-col min-h-screen items-center bg-gray-100">
         <div class="w-300">
             <h1 class="text-2xl font-semibold  text-green-900 text-center mt-10 my-5">Your Result</h1>
-                        <h1 class="text-2xl font-semibold  text-green-900 text-center mt-10 my-5">
+                        <h1 class="text-2xl font-semibold  text-green-900 text-center mt-2c my-5">
                             {{$correct_ans}} out of {{count($resultData)}} Correct
                         </h1>
-
+                        @if($correct_ans*100/count($resultData)>70)
+                                <a href="/certificate" class="text-green-500 font-bold block">View & Download Certificate</a>
+                        @endif
             <table class="w-full border border-gray-300 mt-5 mb-10">
                 <thead class="bg-blue-500 text-white font-serif font-medium">
                     <th class="border border-gray-300 px-4 py-2 text-left">S.No</th>

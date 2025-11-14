@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Crypt;
+use Spatie\Browsershot\Browsershot;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Quiz;
@@ -11,13 +14,22 @@ use App\Models\MCQ;
 use App\Models\User;
 use App\Models\Record;
 use App\Models\MCQ_Record;
+use App\Mail\VerifyUser;
+use App\Mail\UserForgotPassword;
 
 class UserController extends Controller
 {
     function welcome()
     {
-        $categories = Category::withCount('quizzes')->get();
-        return view('welcome', ['categories' => $categories]);
+         $categories = Category::withCount('quizzes')->orderBy('quizzes_count', 'desc')->take(5)->get();
+         $quizData = Quiz::withCount('Records')->orderBy('records_count','desc')->take(5)->get();
+        return view('welcome', ['categories' => $categories , 'quizData'=>$quizData]);
+    }
+
+    // Function Categories
+    function categories(){
+      $categories = Category::withCount('quizzes')->orderBy('quizzes_count', 'desc')->paginate(2);
+      return view('categories-list',['categories'=>$categories]);
     }
 
     // User quiz list function
@@ -54,14 +66,20 @@ class UserController extends Controller
             'email' => $req->email,
             'password' => Hash::make($req->password),
         ]);
+
+        //
+        $link = Crypt::encryptString($user->email);
+        $link = url('verify-user/'.$link);
+        Mail::to($user->email)->send(new VerifyUser($link));
+        // 
         if ($user) {
             Session::put('user', $user);
             if (Session::has('redirectToQuiz')) {
                 $redirectTo = Session::get('redirectToQuiz');
                 Session::forget('redirectToQuiz');
-                return redirect($redirectTo);
+                return redirect($redirectTo)->with('message-success',"User registered successfully, please check email to verify account");
             }
-            return redirect('/');
+            return redirect('/')->with('message-success',"User registered successfully, please check email to verify account");
         }
     }
 
@@ -199,5 +217,82 @@ class UserController extends Controller
     function searchQuiz(Request $req){
         $searchData = Quiz::withCount('mcqs')->where('name','LIKE','%'.$req->search.'%')->get();
         return view('quiz-search',['searchData'=> $searchData,'search'=>$req->search]);
+    }
+
+
+
+    // Verify User
+    function verifyUser($email)
+    {
+        $orgEmail = Crypt::decryptString($email);
+        $user = User::where('email',$orgEmail)->first();
+        if($user){
+            $user->active = 2 ;
+            if($user->save()){
+               return redirect('/')->with('message-success', "User Verified Successfully");
+            }
+        }
+    }
+
+
+
+    // 
+    function userForgotPassword(Request $req){
+        $link = Crypt::encryptString($req->email);
+        $link = url('/user-forgot-password/' . $link);
+        Mail::to($req->email)->send(new UserForgotPassword($link));
+        return redirect("/");
+    }
+
+    function userResetForgotPassword($email){
+        $orgEmail = Crypt::decryptString($email);
+        return view('user-set-forgot-password',['email'=>$orgEmail]);
+    }
+
+    function userSetForgotPassword(Request $req){
+        $validate = $req->validate([
+          
+            'email' => 'required | email',
+            'password' => 'required | min:3 | confirmed',
+        ]);
+
+        $user = User::where('email', $req->email)->first();
+
+        if($user){
+            $user->password = Hash::make($req->password);
+           if($user->save()){
+            return  redirect('user-login');
+           }
+        }
+    }
+
+
+    // certificate function
+    function certificate(){
+        $data = [];
+
+        $data['quiz'] = str_replace('-',' ',Session::get('currentQuiz')['quizName']);
+        $data['name'] = Session::get('user')['name'];
+
+        return view('certificate',['data'=>$data]);
+    }
+
+    // Download Certificate
+    function downloadCertificate(){
+        $data = [];
+
+        $data['quiz'] = str_replace('-', ' ', Session::get('currentQuiz')['quizName']);
+        $data['name'] = Session::get('user')['name'];
+
+        $html =  view('download-certificate', ['data' => $data])->render();
+        return response(
+            Browsershot::html($html)->pdf()
+        )->withHeaders(
+            [
+                'content-Type' => 'application/pdf',
+                'content-Disposition' => 'attachment; filename=certificate.pdf'
+            ]
+            );
+
     }
 }

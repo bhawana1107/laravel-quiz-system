@@ -29,7 +29,7 @@
                             <td class="border border-gray-300 px-4 py-2">{{ $item->name }}</td>
                              <td class="border border-gray-300 px-4 py-2">{{ $item->mcqs_count }}</td>
                             <td class="border border-gray-300 px-4 py-2">
-                                <a href="/start-quiz/{{ $item->id }}/{{ $item->name }}" class=" text-green-600 font-bold">
+                                <a href="/start-quiz/{{ $item->id }}/{{str_replace(' ','-',$item->name)}}" class=" text-green-600 font-bold">
                                 Attempt Quiz
                             </a>
                             </td>

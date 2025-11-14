@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Quiz List</title>
+    <title>Category : {{str_replace('-',' ', $category)}}</title>
     @vite('resources/css/app.css')
 </head>
 
@@ -13,7 +13,7 @@
     <x-user-navbar></x-user-navbar>
 
     <div class=" flex flex-col items-center min-h-screen pt-5">
-        <h2 class=" text-2xl text-center text-gray-800 mb-6">Category Name : {{ $category }} </h2>
+        <h2 class=" text-2xl text-center text-gray-800 mb-6">Category Name : {{str_replace('-',' ', $category)}} </h2>
         <div class="w-300">
             <table class="w-full border border-gray-300 mt-5 mb-10">
                 <thead class="bg-blue-500 text-white font-serif font-medium">
@@ -29,7 +29,7 @@
                             <td class="border border-gray-300 px-4 py-2">{{ $item->name }}</td>
                              <td class="border border-gray-300 px-4 py-2">{{ $item->mcqs_count }}</td>
                             <td class="border border-gray-300 px-4 py-2">
-                                <a href="/start-quiz/{{ $item->id }}/{{ $item->name }}" class=" text-green-600 font-bold">
+                                <a href="/start-quiz/{{ $item->id }}/{{str_replace(' ','-',$item->name)}}" class=" text-green-600 font-bold">
                                 Attempt Quiz
                             </a>
                             </td>
