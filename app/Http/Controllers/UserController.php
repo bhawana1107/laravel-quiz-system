@@ -10,7 +10,7 @@ use Spatie\Browsershot\Browsershot;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Quiz;
-use App\Models\MCQ;
+use App\Models\Mcq;
 use App\Models\User;
 use App\Models\Record;
 use App\Models\MCQ_Record;
@@ -150,13 +150,13 @@ class UserController extends Controller
         $record->status = 1;
         if ($record->save()) {
             $currentQuiz = [];
-            $currentQuiz['totalMcq'] = MCQ::where('quiz_id', Session::get('firstMCQ')->quiz_id)->count();
+            $currentQuiz['totalMcq'] = Mcq::where('quiz_id', Session::get('firstMCQ')->quiz_id)->count();
             $currentQuiz['currentMcq'] = 1;
             $currentQuiz['quizName'] = $name;
             $currentQuiz['quizId'] = Session::get('firstMCQ')->quiz_id;
             $currentQuiz['recordId'] = $record->id;
             Session::put('currentQuiz', $currentQuiz);
-            $mcqData = MCQ::find($id);
+            $mcqData = Mcq::find($id);
             return view('mcq-page', ['quizName' => $name, 'mcqData' => $mcqData]);
         } else {
             return back()->withErrors(['quiz' => 'Unable to start the quiz. Please try again later.']);
@@ -168,7 +168,7 @@ class UserController extends Controller
     {
         $currentQuiz = Session::get('currentQuiz');
         $currentQuiz['currentMcq'] += 1;
-        $mcqData = MCQ::where([
+        $mcqData = Mcq::where([
             ['id', '>', $id],
             ['quiz_id', '=', $currentQuiz['quizId']]
         ])->first();
@@ -183,7 +183,7 @@ class UserController extends Controller
             $mcq_record->user_id = Session::get('user')->id;
             $mcq_record->mcq_id = $req->mcq_id;
             $mcq_record->select_answer = $req->option;
-            if ($req->option == MCQ::find($req->mcq_id)->correct_ans) {
+            if ($req->option == Mcq::find($req->mcq_id)->correct_ans) {
                 $mcq_record->is_correct = 1;
             } else {
                 $mcq_record->is_correct = 0;

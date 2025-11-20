@@ -17,7 +17,7 @@ class Quiz extends Model
     }
 
     function mcqs(){
-        return $this->hasMany(MCQ::class);
+        return $this->hasMany(Mcq::class);
     }  
     
     function records(){
