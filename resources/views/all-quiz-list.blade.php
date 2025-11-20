@@ -5,25 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Quiz System</title>
+    <title>List Of Quizzes</title>
     @vite ('resources/css/app.css')
 </head>
 
 <body>
-    <!-- ERROR -->
-    @if (session('message-success'))
-        <div id="successMsg"
-            class=" bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative max-w-md ml-auto "
-            role="alert">
-            <strong class="font-bold">Success!</strong>
-            <span class="block sm:inline">{{ session('message-success') }}</span>
-        </div>
-    @endif
-    <!-- ERROR END -->
-
     <x-user-navbar></x-user-navbar>
     <!-- Body Content Start -->
     <div class="flex flex-1 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 gap-6">
+        <!-- ERROR -->
+        @if (session('message-success'))
+            <div class=" bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative max-w-md ml-auto "
+                role="alert">
+                <strong class="font-bold">Success!</strong>
+                <span class="block sm:inline">{{ session('message-success') }}</span>
+            </div>
+        @endif
         <!-- SIDEBAR -->
         <x-userSidebar></x-userSidebar>
         <!-- MAIN -->
@@ -36,7 +33,6 @@
                         <p class="text-slate-300 mt-2">Choose a category or search quizzes to begin — earn certificates
                             and level up!</p>
                     </div>
-
                     <div class="mt-6 md:mt-0 w-full md:w-1/3">
                         <div class="relative">
                             <form action="/search-quiz" method="get">
@@ -56,7 +52,7 @@
                 </div>
                 <!-- top quizzes grid -->
                 <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    @foreach ($quizmcq as $key => $item)
+                    @foreach ($quizzes as $key => $item)
                         <article class="p-4 rounded-xl glass border border-white/6 flex items-center justify-between">
                             <div>
                                 <h3 class="text-lg font-semibold text-white">{{ $item->name }}</h3>
@@ -74,6 +70,12 @@
                                 class="ml-4 inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium">Attempt</a>
                         </article>
                     @endforeach
+                </div>
+                <!-- pagination: flush, no extra gap -->
+                <div class="px-6 mt-5 py-2 border-t border-white/6 flex items-center justify-end gap-0">
+                    <div class="text-sm">
+                        {{ $quizzes->links() }}
+                    </div>
                 </div>
             </div>
         </main>
