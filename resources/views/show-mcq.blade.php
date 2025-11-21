@@ -11,7 +11,7 @@
 </head>
 
 <body class=" bg-gray-100">
-    <x-navbar name={{ $name }}></x-navbar>
+    <x-navbar name={{$name}}></x-navbar>
 
     <div class=" glass flex flex-1 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 gap-6">
         <!-- MAIN -->

@@ -11,7 +11,7 @@
 </head>
 
 <body class=" bg-gray-100">
-    <x-navbar name={{ $name }}></x-navbar>
+    <x-navbar name={{$name}}></x-navbar>
     @if (session()->has('mcq-msg'))
         <div class=" bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative max-w-md ml-auto "
             role="alert">

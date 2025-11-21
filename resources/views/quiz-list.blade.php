@@ -11,7 +11,7 @@
 </head>
 
 <body class=" bg-gray-100">
-    <x-navbar name={{ $name }}></x-navbar>
+    <x-navbar name={{$name}}></x-navbar>
     @if (session()->has('quiz'))
         <div class=" bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative max-w-md ml-auto "
             role="alert">
@@ -25,7 +25,7 @@
         <main class="flex-1 min-h-[60vh]">
             <div class="glass rounded-2xl p-8">
                 <h2 class=" text-2xl text-center text-white font-serif font-bold mb-6">Category Name :
-                    {{ str_replace('-', ' ', $category) }}<a href="/admin-categories"
+                    {{ str_replace('-', ' ', $category) }}<a href="admin-categories"
                         class="text-yellow-500 text-sm">Back</a></h2>
 
                 <div class="mt-8">
