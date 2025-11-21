@@ -34,7 +34,7 @@
                             <label for="option_1"
                                 class="flex border glass p-3 mt-2 rounded-2xl shadow-2xl cursor-pointer hover:text-green-500 ">
                                 <input id="option_1" class=" peer form-radio peer-checked:bg-green-400" type="radio"
-                                    value="a" name="option">
+                                    value="a" name="option" required>
                                 <span
                                     class="text-gray-400 pl-2 font-bold peer-checked:text-green-400">{{ $mcqData->a }}</span>
                             </label>
