@@ -19,24 +19,24 @@
                 transition-transform duration-300 md:hidden">
                  <div class="p-4 font-bold text-4xl border-b font-serif ">Menu</div>
                  <nav class="p-4 space-y-3">
-                     <a href="/" class="block text-xl font-bold">Dashboard</a>
-                     <a href="/categories-list" class="block text-xl font-bold">Categories</a>
-                     <a href="/all-quiz-list" class="block text-xl font-bold">Quizzes</a>
+                     <a href="./" class="block text-xl font-bold">Dashboard</a>
+                     <a href="categories-list" class="block text-xl font-bold">Categories</a>
+                     <a href="all-quiz-list" class="block text-xl font-bold">Quizzes</a>
                      @if (session('user'))
-                         <a href="/user-details" class="block text-xl font-bold">Welcome,
+                         <a href="user-details" class="block text-xl font-bold">Welcome,
                              {{ session('user')->name }}</a>
-                         <a class="block font-bold text-xl" href="/user-logout">Logout</a>
+                         <a class="block font-bold text-xl" href="user-logout">Logout</a>
                      @endif
                  </nav>
              </aside>
              <!-- LOGO -->
-             <a href="/" class="logo text-3xl md:text-4xl text-white font-bold">
+             <a href="./" class="logo text-3xl md:text-4xl text-white font-bold">
                  Quiz <span class="text-emerald-400">System</span>
              </a>
              <div class="md:hidden ml-auto relative z-50">
                  @if (session('user'))
                      <a class=" px-4 py-2 bg-emerald-500 text-white rounded-lg font-semibold text-sm cursor-pointer shadow"
-                         href="/user-logout">Logout</a>
+                         href="user-logout">Logout</a>
                  @else
                      <input type="checkbox" id="menuToggle" class="hidden peer">
                      <label for="menuToggle"
@@ -45,8 +45,8 @@
                      </label>
                      <div
                          class="absolute right-0 mt-2 bg-gray-100 rounded-lg shadow p-3 w-32 hidden peer-checked:block z-50">
-                         <a href="/user-login" class="block py-2 text-blue-600 font-bold">Login</a>
-                         <a href="/user-signup" class="block py-2 text-emerald-600 font-bold">Signup</a>
+                         <a href="user-login" class="block py-2 text-blue-600 font-bold">Login</a>
+                         <a href="user-signup" class="block py-2 text-emerald-600 font-bold">Signup</a>
                      </div>
                  @endif
              </div>
@@ -54,16 +54,16 @@
 
          <!-- right nav -->
          <nav class="hidden md:flex items-center gap-6 text-sm text-slate-200">
-             <a href="/" class="hover:text-white">Home</a>
-             <a href="/categories-list" class="hover:text-white">Categories</a>
-             <a href="/all-quiz-list" class="hover:text-white">Quizzes</a>
+             <a href="./" class="hover:text-white">Home</a>
+             <a href="categories-list" class="hover:text-white">Categories</a>
+             <a href="all-quiz-list" class="hover:text-white">Quizzes</a>
              @if (session('user'))
-                 <a class="hover:text-white" href="/user-details">Welcome,
+                 <a class="hover:text-white" href="user-details">Welcome,
                      {{ session('user')->name }}</a>
-                 <a class="hover:text-white" href="/user-logout">Logout</a>
+                 <a class="hover:text-white" href="user-logout">Logout</a>
              @else
-                 <a class="hover:text-white" href="/user-login">Login</a>
-                 <a class="hover:text-white" href="/user-signup">Sign Up</a>
+                 <a class="hover:text-white" href="user-login">Login</a>
+                 <a class="hover:text-white" href="user-signup">Sign Up</a>
              @endif
          </nav>
      </div>

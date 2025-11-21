@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Category : {{ str_replace('-', ' ', $category) }}</title>
     @vite('resources/css/app.css')
+       <base href="{{ config('app.url') }}/">
 </head>
 
 <body>
@@ -24,7 +25,7 @@
     <!-- Body Content Start -->
     <div class="flex flex-1 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 gap-6">
         <!-- SIDEBAR -->
-        <x-userSidebar></x-userSidebar>
+        <x-user-sidebar></x-user-sidebar>
         <!-- MAIN -->
         <main class="flex-1 min-h-[60vh]">
             <div class="glass rounded-2xl p-8">
@@ -68,7 +69,7 @@
                                             </td>
                                             <td class="px-6 py-3 border-b border-white/6 align-center text-right w-28">
 
-                                                <a href="/start-quiz/{{ $item->id }}/{{ str_replace(' ', '-', $item->name) }}"
+                                                <a href="start-quiz/{{ $item->id }}/{{ str_replace(' ', '-', $item->name) }}"
                                                     class=" inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium">Attempt
                                                 </a>
                                             </td>

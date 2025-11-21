@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Edit Quiz</title>
     @vite('resources/css/app.css')
+       <base href="{{ config('app.url') }}/">
 </head>
 
 <body>
@@ -18,7 +19,7 @@
         <main class="flex-1 min-h-[60vh]">
             <div class="glass rounded-2xl p-8">
                 <h2 class=" text-2xl text-center texst-white mb-6">Update Quiz</h2>
-                <form action="/update-Quiz" method="post" class=" space-y-4">
+                <form action="update-Quiz" method="post" class=" space-y-4">
                     @csrf
                     <input type="hidden" name="quiz-id" id="" value="{{$quizData->id}}">
                     <div>

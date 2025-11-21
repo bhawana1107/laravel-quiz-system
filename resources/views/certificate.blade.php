@@ -7,13 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Certificate</title>
     @vite('resources/css/app.css')
+   <base href="{{ config('app.url') }}/">
 </head>
 
 <body class=" pt-5">
     <div class="text-center m-auto w-300">
         <div class="flex justify-between align-items-center m-10">
             <div class="bg-green-500 px-5 py-1 rounded-b-sm border-2 border-green-500">
-                <a href="/" class="text-white font-semibold text-lg font-serif flex gap-2 items-center">
+                <a href="./" class="text-white font-semibold text-lg font-serif flex gap-2 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#FFFFFF">
                         <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
@@ -21,7 +22,7 @@
                     <span>Back</span></a>
             </div>
             <div class="border-blue-500 py-1 bg-blue-500 px-5 rounded-b-sm border-2 ">
-                <a href="/download-certificate/"
+                <a href="download-certificate/"
                     class="font-semibold text-white text-lg font-serif flex gap-2 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#FFFFFF">

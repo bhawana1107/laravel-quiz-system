@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>List Of Quizzes</title>
     @vite ('resources/css/app.css')
+      <base href="{{ config('app.url') }}/">
 </head>
 
 <body>
@@ -22,7 +23,7 @@
             </div>
         @endif
         <!-- SIDEBAR -->
-        <x-userSidebar></x-userSidebar>
+        <x-user-sidebar></x-user-sidebar>
         <!-- MAIN -->
         <main class="flex-1 min-h-[60vh]">
             <div class="glass rounded-2xl p-8">
@@ -35,7 +36,7 @@
                     </div>
                     <div class="mt-6 md:mt-0 w-full md:w-1/3">
                         <div class="relative">
-                            <form action="/search-quiz" method="get">
+                            <form action="search-quiz" method="get">
                                 <input placeholder="Search quizzes or categories..." type="text" name="search"
                                     class="w-full rounded-full bg-black/40 border border-white/6 px-4 py-3 text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder:text-slate-400" />
                                 <button
@@ -66,7 +67,7 @@
                                     • {{ $item->mcqs_count }} questions
                                 </p>
                             </div>
-                            <a href="/start-quiz/{{ $item->id }}/{{ str_replace(' ', '-', $item->name) }}"
+                            <a href="start-quiz/{{ $item->id }}/{{ str_replace(' ', '-', $item->name) }}"
                                 class="ml-4 inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium">Attempt</a>
                         </article>
                     @endforeach

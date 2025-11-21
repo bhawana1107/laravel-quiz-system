@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login User Details</title>
     @vite ('resources/css/app.css')
+      <base href="{{ config('app.url') }}/">
 </head>
 
 <body>
@@ -14,7 +15,7 @@
     <!-- Body Content Start -->
     <div class="flex flex-1 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 gap-6">
         <!-- SIDEBAR -->
-        <x-userSidebar></x-userSidebar>
+        <x-user-sidebar></x-user-sidebar>
         <!-- MAIN -->
         <main class="flex-1 min-h-[60vh]">
             <div class="glass rounded-2xl p-8">
@@ -28,7 +29,7 @@
 
                     <div class="mt-6 md:mt-0 w-full md:w-1/3">
                         <div class="relative">
-                            <form action="/search-quiz" method="get">
+                            <form action="search-quiz" method="get">
                                 <input placeholder="Search quizzes or categories..." type="text" name="search"
                                     class="w-full rounded-full bg-black/40 border border-white/6 px-4 py-3 text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder:text-slate-400" />
                                 <button
@@ -80,7 +81,7 @@
                                                         <span class="text-green-500">Completed</span>
                                                     @else
                                                         <a
-                                                            href="/start-quiz/{{ $record->quiz_id }}/{{ str_replace(' ', '-', $record->name) }}">
+                                                            href="start-quiz/{{ $record->quiz_id }}/{{ str_replace(' ', '-', $record->name) }}">
                                                             <span class="text-orange-500">Incomplete</span>
                                                         </a>
                                                     @endif

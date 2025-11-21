@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Result Page</title>
     @vite('resources/css/app.css')
+       <base href="{{ config('app.url') }}/">
 </head>
 
 <body>
@@ -21,7 +22,7 @@
                     {{ $correct_ans }} out of {{ count($resultData) }} Correct
                 </h1>
                 @if (($correct_ans * 100) / count($resultData) > 70)
-                    <a href="/certificate"
+                    <a href="certificate"
                         class="ml-4 inline-flex font-bold items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg">View
                         & Download
                         Certificate</a>

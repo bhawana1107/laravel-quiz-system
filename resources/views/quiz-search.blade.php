@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Search Result </title>
     @vite('resources/css/app.css')
+       <base href="{{ config('app.url') }}/">
 </head>
 
 <body>
@@ -117,7 +118,7 @@
                                                 </td>
                                                 <td
                                                     class="px-6 py-3 border-b border-white/6 align-center text-right w-28">
-                                                    <a href="/start-quiz/{{ $item->id }}/{{ str_replace(' ', '-', $item->name) }}"
+                                                    <a href="start-quiz/{{ $item->id }}/{{ str_replace(' ', '-', $item->name) }}"
                                                         class=" inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium">Attempt
                                                     </a>
                                                 </td>

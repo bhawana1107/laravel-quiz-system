@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin Dashboard</title>
     @vite('resources/css/app.css')
+   <base href="{{ config('app.url') }}/">
 </head>
 
 <body>

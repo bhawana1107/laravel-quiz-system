@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ str_replace('-', ' ', $quizName) }}</title>
     @vite('resources/css/app.css')
+      <base href="{{ config('app.url') }}/">
 </head>
 
 <body>
@@ -24,7 +25,7 @@
     <!-- Body Content Start -->
     <div class="flex flex-1 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 gap-6">
         <!-- SIDEBAR -->
-        <x-userSidebar></x-userSidebar>
+        <x-user-sidebar></x-user-sidebar>
         <!-- MAIN -->
         <main class="flex-1 min-h-[60vh]">
             <div class="glass rounded-2xl p-8">
@@ -40,17 +41,17 @@
                         </h1>
                         @if (session('user'))
                             <a type="submit"
-                                href="/mcq/{{ session('firstMCQ')->id . '/' . $quizName }}/{{ session('firstMCQ')->quiz_name }}"
+                                href="mcq/{{ session('firstMCQ')->id}}/{{ $quizName }}"
                                 class=" bg-blue-600 rounded-md px-4 py-2 my-5 text-white cursor-pointer">Start
                                 Quiz
                             </a>
                         @else
                             <div class="flex justify-evenly items-center gap-8">
-                                <a type="submit" href="/user-signup-quiz"
+                                <a type="submit" href="user-signup-quiz"
                                     class=" bg-blue-600 rounded-md px-6 py-4 my-5 text-white cursor-pointer">SignUp
                                     for Start Quiz
                                 </a>
-                                <a type="submit" href="/user-login-quiz"
+                                <a type="submit" href="user-login-quiz"
                                     class=" bg-blue-600 rounded-md px-6 py-4 my-5 text-white cursor-pointer">Login
                                     for Start Quiz
                                 </a>

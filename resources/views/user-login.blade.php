@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>User Login</title>
     @vite('resources/css/app.css')
+       <base href="{{ config('app.url') }}/">
 </head>
 
 <body>
@@ -27,7 +28,7 @@
             @error('user')
                 <div class="text-red-500 ">{{ $message }}</div>
             @enderror
-            <form action="/user-login" method="post" class=" space-y-4">
+            <form action="user-login" method="post" class=" space-y-4">
                 @csrf
                 <div>
                     <label for="" class="text-gray-600 mb-1">User Email</label>

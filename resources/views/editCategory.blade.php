@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Edit Categories</title>
     @vite('resources/css/app.css')
+   <base href="{{ config('app.url') }}/">
 </head>
 
 <body>
@@ -24,7 +25,7 @@
         <main class="flex-1 min-h-[60vh]">
             <div class="glass rounded-2xl p-8">
                 <h2 class=" text-2xl text-center text-white mb-6">Update Category</h2>
-                <form action="/update-category" method="post" class=" space-y-4">
+                <form action="update-category" method="post" class=" space-y-4">
                     @csrf
                     <input type="hidden" name="categoryid" id="" value="{{$categoryData->id}}">
                     <div>

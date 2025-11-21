@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin Login</title>
     @vite('resources/css/app.css')
+       <base href="{{ config('app.url') }}/">
 </head>
 
 <body class=" flex justify-center items-center min-h-screen">
@@ -16,7 +17,7 @@
             <div class="text-red-500 ">{{ $message }}</div>
         @enderror
 
-        <form action="/admin" method="post" class=" space-y-4">
+        <form action="admin" method="post" class=" space-y-4">
             @csrf
             <div>
                 <label for="" class="text-gray-600 mb-1">Admin Name</label>

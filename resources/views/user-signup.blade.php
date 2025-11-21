@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>User Signup</title>
     @vite('resources/css/app.css')
+          <base href="{{ config('app.url') }}/">
 </head>
 
 <body>
@@ -18,7 +19,7 @@
                 <div class="text-red-500 ">{{ $message }}</div>
             @enderror
 
-            <form action="/user-signup" method="post" class=" space-y-4">
+            <form action="user-signup" method="post" class=" space-y-4">
                 @csrf
                 <div>
                     <label for="" class="text-gray-600 mb-1">User Name</label>

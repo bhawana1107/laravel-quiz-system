@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Forgot Password</title>
     @vite('resources/css/app.css')
+      <base href="{{ config('app.url') }}/">
 </head>
 
 <body>
@@ -18,7 +19,7 @@
                 <div class="text-red-500 ">{{ $message }}</div>
             @enderror
 
-            <form action="/user-forgot-password" method="post" class=" space-y-4">
+            <form action="user-forgot-password" method="post" class=" space-y-4">
                 @csrf
 
                 <div>

@@ -166,6 +166,12 @@ class UserController extends Controller
     // Submit and next function
     function submitAndNext(Request $req, $id)
     {
+        $req->validate([
+            'option' => 'required'
+        ], [
+            'option.required' => 'Please select an answer before submitting.'
+        ]);
+        
         $currentQuiz = Session::get('currentQuiz');
         $currentQuiz['currentMcq'] += 1;
         $mcqData = Mcq::where([

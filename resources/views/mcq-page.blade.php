@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MCQ</title>
     @vite('resources/css/app.css')
+    <base href="{{ config('app.url') }}/">
 </head>
 
 <body>
@@ -24,10 +25,12 @@
                         {{ Session::get('currentQuiz.currentMcq') }}</h1>
                     <div class=" mx-auto p-8 glass shadow-2xl rounded-xl w-140">
                         <h3 class="font-bold text-xl mb-5 text-center text-white">{{ $mcqData->question }}</h3>
-                        <form action="/submit-next/{{ $mcqData->id }}" method="post" class="space-y-4">
+                        <form action="submit-next/{{ $mcqData->id }}" method="post" class="space-y-4">
                             @csrf
                             <input type="hidden" name="mcq_id" value="{{ $mcqData->id }}">
-
+                            @error('option')
+                                <div class="text-red-500">{{ $message }}</div>
+                            @enderror
                             <label for="option_1"
                                 class="flex border glass p-3 mt-2 rounded-2xl shadow-2xl cursor-pointer hover:text-green-500 ">
                                 <input id="option_1" class=" peer form-radio peer-checked:bg-green-400" type="radio"

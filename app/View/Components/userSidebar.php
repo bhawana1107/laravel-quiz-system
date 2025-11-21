@@ -8,7 +8,7 @@ use Illuminate\View\Component;
 use App\Models\Category;
 use App\Models\Quiz;
 
-class userSidebar extends Component
+class UserSidebar extends Component
 {
  public $categories;
     public $quizData;
@@ -41,6 +41,6 @@ class userSidebar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.userSidebar');
+        return view('components.user-sidebar');
     }
 }

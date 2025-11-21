@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Show Mcq</title>
     @vite('resources/css/app.css')
+       <base href="{{ config('app.url') }}/">
 </head>
 
 <body class=" bg-gray-100">
@@ -17,7 +18,7 @@
         <main class="flex-1 min-h-[60vh]">
             <h2 class=" text-2xl text-center text-white font-serif font bold mt-5 mb-6">
                 Quiz Name : {{ $quizName }} <a
-                    href="/show-quiz/{{ $mcqs[0]->quiz_id }}/{{ str_replace(' ', '-', $quizName) }}"
+                    href="show-quiz/{{ $mcqs[0]->quiz_id }}/{{ str_replace(' ', '-', $quizName) }}"
                     class="text-yellow-500 text-sm ml-3">Back</a></h2>
             <div class="mt-8">
                 <div class="glass rounded-2xl overflow-hidden mt-8 border border-white/6">
