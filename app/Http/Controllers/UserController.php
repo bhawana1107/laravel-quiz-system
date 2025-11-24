@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use Spatie\Browsershot\Browsershot;
+use Dompdf\Dompdf;  
+use Dompdf\Options;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Quiz;
@@ -318,21 +320,51 @@ class UserController extends Controller
     }
 
     // Download Certificate
-    function downloadCertificate()
+    // function downloadCertificate()
+    // {
+    //     $data = [];
+
+    //     $data['quiz'] = str_replace('-', ' ', Session::get('currentQuiz')['quizName']);
+    //     $data['name'] = Session::get('user')['name'];
+
+    //     $html =  view('download-certificate', ['data' => $data])->render();
+    //     return response(
+    //         Browsershot::html($html)->pdf()
+    //     )->withHeaders(
+    //         [
+    //             'content-Type' => 'application/pdf',
+    //             'content-Disposition' => 'attachment; filename=certificate.pdf'
+    //         ]
+    //     );
+    // }
+
+    public function downloadCertificate()
     {
+        // Data ready
         $data = [];
+        $data['quiz'] = str_replace('-', ' ', Session::get('currentQuiz')['quizName'] ?? '');
+        $data['name'] = Session::get('user')['name'] ?? 'User';
 
-        $data['quiz'] = str_replace('-', ' ', Session::get('currentQuiz')['quizName']);
-        $data['name'] = Session::get('user')['name'];
+        // Blade view ko HTML me render karo
+        $html = view('download-certificate', ['data' => $data])->render();
 
-        $html =  view('download-certificate', ['data' => $data])->render();
-        return response(
-            Browsershot::html($html)->pdf()
-        )->withHeaders(
-            [
-                'content-Type' => 'application/pdf',
-                'content-Disposition' => 'attachment; filename=certificate.pdf'
-            ]
-        );
+        // Dompdf options (optional but good)
+        $options = new Options();
+        $options->set('defaultFont', 'DejaVu Sans'); // unicode support ke liye
+
+        // Dompdf object banao
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+
+        // Paper size & orientation
+        $dompdf->setPaper('A4', 'landscape'); // ya 'portrait'
+
+        // Render PDF
+        $dompdf->render();
+
+        // Output browser ko bhejo (download force)
+        return response($dompdf->output(), 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="certificate.pdf"');
     }
 }
